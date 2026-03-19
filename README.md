@@ -33,20 +33,20 @@ The model starts with shared parameters \(\theta\), learned across many tasks.
 #### 2. Inner loop adaptation
 For a sampled task, the model performs one or more gradient steps on the support set:
 
-\[
+$$
 \theta' = \theta - \alpha \nabla_\theta \mathcal{L}_{support}(\theta)
-\]
+$$
 
 where:
-- \(\alpha\) is the inner-loop learning rate
-- \(\theta'\) are the adapted task-specific parameters
+- $\alpha$ is the inner-loop learning rate  
+- $\theta'$ are the adapted task-specific parameters
 
 #### 3. Outer loop meta-update
 The adapted parameters are then evaluated on the query set:
 
-\[
-\min_\theta \sum_{\mathcal{T}_i \sim p(\mathcal{T})} \mathcal{L}_{query}^{\mathcal{T}_i}(\theta'_i)
-\]
+$$
+\theta \leftarrow \theta - \beta \nabla_\theta \sum_{\mathcal{T}_i} \mathcal{L}_{query}(\theta'_i)
+$$
 
 Gradients from the query loss are backpropagated through the adaptation process to update the original shared initialization \(\theta\).
 
